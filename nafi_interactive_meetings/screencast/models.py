@@ -19,10 +19,10 @@ class Event(models.Model):
         return self.title
 
 
-class Element(models.Model):
+class Slide(models.Model):
     """Сущность слайда/блока/темы"""
     title = models.CharField('Название/номер слайда', max_length=128, blank=False)
-    jpeg = models.ImageField('Слайд в JPEG', upload_to='media/pdfs')
+    jpeg = models.ImageField('Слайд в JPEG', upload_to='media/jpgs')
     time = models.TimeField('Время на блок')
 
     event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Слайд')
