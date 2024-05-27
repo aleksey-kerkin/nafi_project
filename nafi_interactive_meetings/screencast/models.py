@@ -2,17 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from pdf2image import convert_from_path
+from uuid import uuid1
 
 
 # Create your models here.
+def user_directory_path(instance, filename):
+    extension = filename.split('.')[-1]
+    name = uuid1().hex
+    filename = name + '.' + extension
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
 class Event(models.Model):
     """Сущность мероприятия"""
     title = models.CharField('Название мероприятия', max_length=128, blank=False)
     start_date = models.DateTimeField('Дата/время проведения', blank=True)
-    pdf = models.ImageField('Презентация в PDF', upload_to='media/pdfs')
+    pdf = models.FileField('Презентация в PDF', upload_to=user_directory_path)
     current_slide = models.IntegerField(default=0)
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
     # slides = models.ForeignKey('Slide', on_delete=models.CASCADE, verbose_name='Слайды')
 
     class Meta:
@@ -34,10 +41,11 @@ class Event(models.Model):
 class Slide(models.Model):
     """Сущность слайда/блока/темы"""
     title = models.CharField('Название/номер слайда', max_length=128, blank=False)
-    jpeg = models.ImageField('Слайд в JPEG', upload_to='media/jpgs')
+    jpeg = models.ImageField('Слайд в JPEG', upload_to=user_directory_path)
     time = models.TimeField('Время на блок')
 
-    event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Слайд')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Мероприятие')
 
     class Meta:
         verbose_name = 'Слайд'
