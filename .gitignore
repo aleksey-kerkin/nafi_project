@@ -1,3 +1,7 @@
 .idea/
 venv/
+
 nafi_interactive_meetings/nafi_interactive_meetings/__pycache__/
+
+nafi_interactive_meetings/screencast/__pycache__/
+nafi_interactive_meetings/screencast/migrations/

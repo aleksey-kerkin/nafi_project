@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from pdf2image import convert_from_path
+
 
 # Create your models here.
 class Event(models.Model):
@@ -8,8 +10,10 @@ class Event(models.Model):
     title = models.CharField('Название мероприятия', max_length=128, blank=False)
     start_date = models.DateTimeField('Дата/время проведения', blank=True)
     pdf = models.ImageField('Презентация в PDF', upload_to='media/pdfs')
+    current_slide = models.IntegerField(default=0)
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    # slides = models.ForeignKey('Slide', on_delete=models.CASCADE, verbose_name='Слайды')
 
     class Meta:
         verbose_name = 'Мероприятие'
@@ -17,6 +21,14 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+    def add_slides(self):
+        """Метод разбивает файл PDF на слайды."""
+        # https://pypi.org/project/pdf2image/
+        images = convert_from_path(self.pdf, 300)  # тут нужно как-то сам файл выдернуть
+        for i, image in enumerate(images):
+            slide = Slide.objects.create(i, image)
+            slide.save()
 
 
 class Slide(models.Model):
