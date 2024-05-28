@@ -21,14 +21,12 @@ class Event(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
 
-    # slides = models.ForeignKey('Slide', on_delete=models.CASCADE, verbose_name='Слайды')
-
     class Meta:
         verbose_name = 'Мероприятие'
         verbose_name_plural = 'Мероприятия'
 
     def __str__(self):
-        return self.title
+        return f'{self.user} -> {self.title}'
 
 
 class Slide(models.Model):
@@ -45,4 +43,4 @@ class Slide(models.Model):
         verbose_name_plural = 'Слайды'
 
     def __str__(self):
-        return self.title
+        return f'{self.event} -> {self.title}'
