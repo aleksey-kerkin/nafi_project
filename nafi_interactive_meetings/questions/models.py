@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from screencast.models import Event
 
 
 class Question(models.Model):
@@ -7,14 +7,21 @@ class Question(models.Model):
     Сущность вопроса.
     """
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Владелец")
-    question_text = models.CharField(max_length=200)
+    owner = models.CharField(
+        default="Без имени", help_text="Напишите имя", verbose_name="Имя", max_length=65
+    )
+    question_text = models.CharField(
+        help_text="Задайте вопрос.", null=False, blank=False, max_length=200
+    )
     pub_date = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False, verbose_name="Отвечен")
+    event = models.ForeignKey(
+        Event, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Мероприятие"
+    )
 
     class Meta:
         verbose_name = "Вопрос"
         verbose_name_plural = "Вопросы"
 
     def __str__(self):
-        return f"Вопрос от {self.user.username}: {self.question_text[:20]}"
+        return f"Вопрос от {self.owner}: {self.question_text[:20]}"
