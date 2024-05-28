@@ -11,7 +11,7 @@ class Question(models.Model):
         default="Без имени", help_text="Напишите имя", verbose_name="Имя", max_length=65
     )
     question_text = models.CharField(
-        help_text="Задайте вопрос.", null=False, blank=False, verbose_name="Вопрос", max_length=200
+        help_text="Задайте вопрос", null=False, blank=False, verbose_name="Вопрос", max_length=200
     )
     pub_date = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False, verbose_name="Отвечен")
