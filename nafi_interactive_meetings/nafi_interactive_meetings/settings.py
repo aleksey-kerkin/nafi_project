@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'screencast.apps.ScreencastConfig',
+    'questions.apps.QuestionsConfig',
 ]
 
 MIDDLEWARE = [

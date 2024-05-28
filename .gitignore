@@ -7,3 +7,6 @@ nafi_interactive_meetings/media/
 
 nafi_interactive_meetings/screencast/__pycache__/
 nafi_interactive_meetings/screencast/migrations/
+
+nafi_interactive_meetings/questions/__pycache__/
+nafi_interactive_meetings/questions/migrations/
