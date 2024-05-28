@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 
 
 class Question(models.Model):
-    """Сущность вопроса"""
+    """
+    Сущность вопроса.
+    """
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Владелец")
     question_text = models.CharField(max_length=200)

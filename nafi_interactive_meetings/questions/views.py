@@ -1,9 +1,15 @@
-from rest_framework import generics
-
+from rest_framework import viewsets
 from .models import Question
-from .serializer import QuestionSerializer
+from .serializers import QuestionSerializer
 
 
-class QuestionList(generics.ListCreateAPIView):
+class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+
+    def perform_create(self, serializer):
+        # Получаем текст вопроса из запроса
+        question_text = self.request.data.get("question_text")
+
+        # Сохраняем вопрос с обработанным текстом
+        serializer.save(user=self.request.user, question_text=question_text)
