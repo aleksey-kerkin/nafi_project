@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from pdf2image import convert_from_path
 from uuid import uuid1
 
 
@@ -12,6 +11,7 @@ def user_directory_path(instance, filename):
     filename = name + '.' + extension
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
+
 class Event(models.Model):
     """Сущность мероприятия"""
     title = models.CharField('Название мероприятия', max_length=128, blank=False)
@@ -20,6 +20,7 @@ class Event(models.Model):
     current_slide = models.IntegerField(default=0)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+
     # slides = models.ForeignKey('Slide', on_delete=models.CASCADE, verbose_name='Слайды')
 
     class Meta:
@@ -29,20 +30,12 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
-    def add_slides(self):
-        """Метод разбивает файл PDF на слайды."""
-        # https://pypi.org/project/pdf2image/
-        images = convert_from_path(self.pdf, 300)  # тут нужно как-то сам файл выдернуть
-        for i, image in enumerate(images):
-            slide = Slide.objects.create(i, image)
-            slide.save()
-
 
 class Slide(models.Model):
     """Сущность слайда/блока/темы"""
     title = models.CharField('Название/номер слайда', max_length=128, blank=False)
-    jpeg = models.ImageField('Слайд в JPEG', upload_to=user_directory_path)
-    time = models.TimeField('Время на блок')
+    jpeg = models.FileField('Слайд в JPEG', upload_to=user_directory_path)
+    time = models.IntegerField('Время на блок, сек')
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
     event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Мероприятие')
