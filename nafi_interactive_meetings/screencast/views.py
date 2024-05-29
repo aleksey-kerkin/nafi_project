@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Event, Slide
-from .serializers import EventSerializer, SlideSerializer
+from .models import *
+from .serializers import *
 
 
 # Create your views here.
