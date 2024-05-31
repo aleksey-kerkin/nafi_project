@@ -1,5 +1,5 @@
 from django.db import models
-from auth_system.models import User
+from django.conf import settings
 
 from uuid import uuid1
 
@@ -19,7 +19,7 @@ class Event(models.Model):
     pdf = models.FileField('Презентация в PDF', upload_to=user_directory_path)
     current_slide = models.IntegerField(default=0)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
 
     class Meta:
         verbose_name = 'Мероприятие'
@@ -35,7 +35,7 @@ class Slide(models.Model):
     jpeg = models.FileField('Слайд в JPEG', upload_to=user_directory_path)
     time = models.IntegerField('Время на блок, сек')
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Мероприятие')
 
     class Meta:

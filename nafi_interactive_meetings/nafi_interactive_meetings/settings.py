@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
     'screencast.apps.ScreencastConfig',
     'questions.apps.QuestionsConfig',
-    'auth_system.apps.AuthSystemConfig'
+    'auth_system.apps.AuthSystemConfig',
+    'quiz.apps.QuizConfig',
 ]
 
 MIDDLEWARE = [
