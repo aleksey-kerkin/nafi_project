@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'djoser',
+    'phonenumber_field',
 
     'screencast.apps.ScreencastConfig',
     'questions.apps.QuestionsConfig',
@@ -132,3 +133,5 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
 }
+
+AUTH_USER_MODEL = 'auth_system.User'
