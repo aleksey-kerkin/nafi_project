@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'djoser',
 
     'screencast.apps.ScreencastConfig',
     'questions.apps.QuestionsConfig',
+    'auth_system.apps.AuthSystemConfig'
 ]
 
 MIDDLEWARE = [
