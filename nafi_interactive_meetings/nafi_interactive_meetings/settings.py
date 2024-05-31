@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'djoser',
+    'phonenumber_field',
 
     'screencast.apps.ScreencastConfig',
     'questions.apps.QuestionsConfig',
+    'auth_system.apps.AuthSystemConfig'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +133,5 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
 }
+
+AUTH_USER_MODEL = 'auth_system.User'
