@@ -16,8 +16,8 @@ def user_directory_path(instance, filename):
 
 class Quiz(models.Model):
     title = models.CharField('Название викторины', max_length=128)
-    description = models.TextField('Описание викторины')
-    banner = models.ImageField('Баннер викторины', upload_to=user_directory_path)
+    description = models.TextField('Описание викторины', blank=True)
+    banner = models.ImageField('Баннер викторины', upload_to=user_directory_path, blank=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Мероприятие')
@@ -31,15 +31,15 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    title = models.CharField('Название вопроса', max_length=256)
-    image = models.ImageField('Изображение', upload_to=user_directory_path)
+    title = models.CharField('Вопрос', max_length=256)
+    image = models.ImageField('Изображение', upload_to=user_directory_path, blank=True)
 
-    correct_answer = models.CharField('Правильный ответ', max_length=128, blank=False, null=True)
-    wrong_answer_1 = models.CharField('Ошибочный ответ', max_length=128, blank=False, null=True)
-    wrong_answer_2 = models.CharField('Ошибочный ответ', max_length=128)
-    wrong_answer_3 = models.CharField('Ошибочный ответ', max_length=128)
-    wrong_answer_4 = models.CharField('Ошибочный ответ', max_length=128)
-    wrong_answer_5 = models.CharField('Ошибочный ответ', max_length=128)
+    correct_answer = models.CharField('Правильный ответ', max_length=128)
+    wrong_answer_1 = models.CharField('Ошибочный ответ', max_length=128)
+    wrong_answer_2 = models.CharField('Ошибочный ответ', max_length=128, blank=True)
+    wrong_answer_3 = models.CharField('Ошибочный ответ', max_length=128, blank=True)
+    wrong_answer_4 = models.CharField('Ошибочный ответ', max_length=128, blank=True)
+    wrong_answer_5 = models.CharField('Ошибочный ответ', max_length=128, blank=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, verbose_name='Викторина')
