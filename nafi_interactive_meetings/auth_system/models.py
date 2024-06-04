@@ -30,13 +30,20 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    LEGAL = "LP"
+    NATURAL = "NP"
+    PERSONS = [
+        (LEGAL, "Юридическое лицо"),
+        (NATURAL, "Физическое лицо"),
+    ]
+
     email = models.EmailField("Email адрес", max_length=255, unique=True)
     name = models.CharField("Имя пользователя", max_length=255)
     middlename = models.CharField("Отчество", blank=True, null=True, max_length=255)
     lastname = models.CharField("Фамилия", blank=True, null=True, max_length=255)
     phone = PhoneNumberField("Номер телефона", blank=True)
     position = models.CharField("Должность", blank=True, null=True, max_length=127)
-    is_corporate = models.BooleanField("Юр. лицо", default=False)
+    entity = models.CharField("Физ./Юр. лицо", choices=PERSONS, default=NATURAL, max_length=17)
     organization = models.CharField("Организация", blank=True, null=True, max_length=255)
     business_area = models.CharField("Сфера деятельности", default="Безработный", max_length=255)
     is_active = models.BooleanField(default=True)
