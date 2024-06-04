@@ -5,10 +5,25 @@ from .serializers import *
 
 # Create your views here.
 class EventAPIView(generics.ListCreateAPIView):
-    queryset = Event.objects.all()
     serializer_class = EventSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Event.objects.filter(user=user)
 
 
 class SlideAPIView(generics.ListCreateAPIView):
-    queryset = Slide.objects.all()
     serializer_class = SlideSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Slide.objects.filter(user=user)
+
+
+class SlideListByEvent(generics.ListAPIView):
+    serializer_class = SlideSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        event_id = self.kwargs['event']  # получаем ID события из URL
+        return Slide.objects.filter(user=user, event=event_id)

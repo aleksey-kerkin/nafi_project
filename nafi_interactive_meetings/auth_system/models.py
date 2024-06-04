@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.name
 
     def __str__(self):
-        return self.email
+        return f'{self.name}({self.email})'
 
     class Meta:
         verbose_name = "Пользователь"

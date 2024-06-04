@@ -1,5 +1,6 @@
 from django.db import models
-from auth_system.models import User
+from django.conf import settings
+from django.core.validators import FileExtensionValidator
 
 from uuid import uuid1
 
@@ -16,10 +17,14 @@ class Event(models.Model):
     """Сущность мероприятия"""
     title = models.CharField('Название мероприятия', max_length=128, blank=False)
     start_date = models.DateTimeField('Дата/время проведения', blank=True)
-    pdf = models.FileField('Презентация в PDF', upload_to=user_directory_path)
+    pdf = models.FileField(
+        'Презентация в PDF',
+        upload_to=user_directory_path,
+        validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
+    )
     current_slide = models.IntegerField(default=0)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
 
     class Meta:
         verbose_name = 'Мероприятие'
@@ -35,7 +40,7 @@ class Slide(models.Model):
     jpeg = models.FileField('Слайд в JPEG', upload_to=user_directory_path)
     time = models.IntegerField('Время на блок, сек')
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Мероприятие')
 
     class Meta:
