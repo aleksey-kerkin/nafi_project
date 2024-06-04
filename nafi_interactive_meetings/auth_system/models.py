@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("Email адрес", max_length=255, unique=True)
     name = models.CharField("Имя пользователя", max_length=255)
-    phone = PhoneNumberField("Номер телефона", blank=True, unique=True)
+    phone = PhoneNumberField("Номер телефона", blank=True)
     position = models.CharField("Должность", blank=True, null=True, max_length=127)
     is_corporate = models.BooleanField("Юр. лицо", default=False)
     organization = models.CharField("Организация", blank=True, null=True, max_length=255)
