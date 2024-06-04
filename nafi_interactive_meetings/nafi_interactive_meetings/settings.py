@@ -19,6 +19,7 @@ SECRET_KEY = "django-insecure-@b(g0lp*dkq4&t&dup#4$-p^33)5$dm$4lkjsyg__kjnop-ln$
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SITE_URL = "http://127.0.0.1:8000"  # Также нужен для работы почты
 
 # Application definition
 
@@ -29,11 +30,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Django REST Framework
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    # Djoser app for auth
     "djoser",
+    # Приложение для поля телефонного номера
     "phonenumber_field",
+    # Apps
     "screencast.apps.ScreencastConfig",
     "questions.apps.QuestionsConfig",
     "auth_system.apps.AuthSystemConfig",
@@ -127,14 +132,16 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-        # "rest_framework.permissions.AllowAny",
+        # "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",  # На вермя разработки для доступа
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+
+# Authentification and authorisation settings
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
@@ -184,11 +191,11 @@ AUTH_USER_MODEL = "auth_system.User"
 # Email settings
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = True
-SITE_URL = "http://127.0.0.1:8000"
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
