@@ -141,7 +141,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-# Authentification and authorisation settings
+# Authentification and authorization / JWT / Djoser Setting
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
