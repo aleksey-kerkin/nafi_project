@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     "questions.apps.QuestionsConfig",
     "auth_system.apps.AuthSystemConfig",
     "quiz.apps.QuizConfig",
+    # Auto-documentation / swagger
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
 ]
 
 MIDDLEWARE = [
@@ -139,6 +142,7 @@ REST_FRAMEWORK = {
         # "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",  # Для работы swagger
 }
 
 # Authentication and authorization / JWT / Djoser Setting
@@ -199,3 +203,15 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+
+# Настройка для swagger
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "НАФИ Илиметр",
+    "DESCRIPTION": "Interactive meetings",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+}
