@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     "questions.apps.QuestionsConfig",
     "auth_system.apps.AuthSystemConfig",
     "quiz.apps.QuizConfig",
+    # Auto-documentation / swagger
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
 ]
 
 MIDDLEWARE = [
@@ -129,16 +132,14 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
-        # "rest_framework.permissions.IsAuthenticated",
-        "rest_framework.permissions.AllowAny",  # На время разработки для доступа
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework.authentication.TokenAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.BasicAuthentication",  # Подключен auth по login/password
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # Подключение auth по JWT
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",  # Для работы swagger
 }
 
 # Authentication and authorization / JWT / Djoser Setting
@@ -199,3 +200,20 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+
+# Настройка для swagger
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "НАФИ Илиметр",
+    "DESCRIPTION": "Interactive meetings",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": True,
+    },
+}
