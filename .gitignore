@@ -1,5 +1,7 @@
-.idea/
 venv/
+.idea/
+.vscode/
+.env
 .DS_Store
 
 nafi_interactive_meetings/nafi_interactive_meetings/__pycache__/
@@ -16,4 +18,3 @@ nafi_interactive_meetings/auth_system/migrations/
 
 nafi_interactive_meetings/quiz/__pycache__/
 nafi_interactive_meetings/quiz/migrations/
-.env
