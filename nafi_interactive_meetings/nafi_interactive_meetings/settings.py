@@ -133,7 +133,7 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.IsAuthenticated",
-        "rest_framework.permissions.AllowAny",  # На вермя разработки для доступа
+        "rest_framework.permissions.AllowAny",  # На время разработки для доступа
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "rest_framework.authentication.TokenAuthentication",
@@ -141,7 +141,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-# Authentification and authorization / JWT / Djoser Setting
+# Authentication and authorization / JWT / Djoser Setting
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
