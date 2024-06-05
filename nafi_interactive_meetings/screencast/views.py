@@ -9,7 +9,7 @@ class EventAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Event.objects.filter(user=user.id)
+        return Event.objects.filter(user=user)
 
 
 class SlideAPIView(generics.ListCreateAPIView):
@@ -17,7 +17,7 @@ class SlideAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Slide.objects.filter(user=user.id)
+        return Slide.objects.filter(user=user)
 
 
 class SlideListByEvent(generics.ListAPIView):
@@ -26,4 +26,4 @@ class SlideListByEvent(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         event_id = self.kwargs['event']  # получаем ID события из URL
-        return Slide.objects.filter(user=user.id, event=event_id)
+        return Slide.objects.filter(user=user, event=event_id)
