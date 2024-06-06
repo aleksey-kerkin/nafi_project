@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     "auth_system.apps.AuthSystemConfig",
     "quiz.apps.QuizConfig",
     # Auto-documentation / swagger
-    # "drf_spectacular",
-    # "drf_spectacular_sidecar",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
 ]
 
 MIDDLEWARE = [
@@ -136,7 +136,8 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.BasicAuthentication",  # Подключен auth по login/password
+        # "rest_framework.authentication.BasicAuthentication",  # Подключен auth по login/password
+        # "rest_framework.authentication.SessionAuthentication",  # Подключен auth по сессии
         "rest_framework_simplejwt.authentication.JWTAuthentication",  # Подключение auth по JWT
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",  # Для работы swagger
@@ -147,10 +148,10 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("JWT",),
+    # "AUTH_HEADER_TYPES": ("JWT",),
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    # "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
 DJOSER = {
