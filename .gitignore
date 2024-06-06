@@ -6,6 +6,7 @@ venv/
 
 nafi_interactive_meetings/nafi_interactive_meetings/__pycache__/
 nafi_interactive_meetings/media/
+nafi_interactive_meetings/static/
 nafi_interactive_meetings/db.sqlite3
 
 nafi_interactive_meetings/screencast/__pycache__/
