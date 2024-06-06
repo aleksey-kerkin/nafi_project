@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     "auth_system.apps.AuthSystemConfig",
     "quiz.apps.QuizConfig",
     # Auto-documentation / swagger
-    "drf_spectacular",
-    "drf_spectacular_sidecar",
+    # "drf_spectacular",
+    # "drf_spectacular_sidecar",
 ]
 
 MIDDLEWARE = [
