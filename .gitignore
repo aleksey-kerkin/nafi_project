@@ -10,8 +10,10 @@ nafi_interactive_meetings/static/
 nafi_interactive_meetings/db.sqlite3
 
 nafi_interactive_meetings/screencast/__pycache__/
+nafi_interactive_meetings/screencast/migrations/__pycache__
 nafi_interactive_meetings/questions/__pycache__/
+nafi_interactive_meetings/questions/migrations/__pycache__
 nafi_interactive_meetings/auth_system/__pycache__/
-nafi_interactive_meetings/quiz/__pycache__/
-
 nafi_interactive_meetings/auth_system/migrations/__pycache__
+nafi_interactive_meetings/quiz/__pycache__/
+nafi_interactive_meetings/quiz/migrations/__pycache__
