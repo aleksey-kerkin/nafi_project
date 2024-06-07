@@ -14,3 +14,4 @@ nafi_interactive_meetings/questions/__pycache__/
 nafi_interactive_meetings/auth_system/__pycache__/
 nafi_interactive_meetings/quiz/__pycache__/
 
+nafi_interactive_meetings/auth_system/migrations/__pycache__
