@@ -9,7 +9,7 @@ from .models import Event, Slide
 
 
 @receiver(post_save, sender=Event)
-def add_to_group(sender, instance, **kwargs):
+def create_slides(sender, instance, **kwargs):
     # https://pypi.org/project/pdf2image/
     path_2_file = str(settings.MEDIA_ROOT) + '/' + str(instance.pdf)
     images = convert_from_path(path_2_file, 300)
