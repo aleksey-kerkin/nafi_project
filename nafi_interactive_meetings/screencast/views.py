@@ -1,10 +1,10 @@
-from rest_framework import generics
-from .models import *
-from .serializers import *
+from rest_framework import generics, viewsets
+from .models import Event, Slide
+from .serializers import EventSerializer, SlideSerializer
 
 
-# Create your views here.
-class EventAPIView(generics.ListCreateAPIView):
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()  # почему-то ругается без него, хотя по инструкции должно без него работать
     serializer_class = EventSerializer
 
     def get_queryset(self):
@@ -12,7 +12,8 @@ class EventAPIView(generics.ListCreateAPIView):
         return Event.objects.filter(user=user)
 
 
-class SlideAPIView(generics.ListCreateAPIView):
+class SlideViewSet(viewsets.ModelViewSet):
+    queryset = Slide.objects.all()  # почему-то ругается без него, хотя по инструкции должно без него работать
     serializer_class = SlideSerializer
 
     def get_queryset(self):
@@ -25,5 +26,5 @@ class SlideListByEvent(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        event_id = self.kwargs['event']  # получаем ID события из URL
+        event_id = self.kwargs['event']
         return Slide.objects.filter(user=user, event=event_id)

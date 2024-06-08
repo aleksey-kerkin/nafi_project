@@ -1,16 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
-# from django.views.generic import TemplateView
 from rest_framework_simplejwt.views import TokenBlacklistView
 
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include("screencast.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),
-    path("api-screencast/", include("screencast.urls")),
+    # path("api-screencast/", include("screencast.urls")),
     path("api-questions/", include("questions.urls")),
     path("api-token/blacklist/", TokenBlacklistView.as_view(), name="token_blacklist"),
 ]
