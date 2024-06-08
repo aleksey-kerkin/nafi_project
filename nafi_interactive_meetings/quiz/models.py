@@ -15,6 +15,7 @@ def user_directory_path(instance, filename):
 
 
 class Quiz(models.Model):
+    """Сущность викторины"""
     title = models.CharField('Название викторины', max_length=128)
     description = models.TextField('Описание викторины', blank=True)
     banner = models.ImageField('Баннер викторины', upload_to=user_directory_path, blank=True)
@@ -31,7 +32,8 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    title = models.CharField('Вопрос', max_length=256)
+    """Сущность вопроса для викторины"""
+    title = models.CharField('Вопрос викторины', max_length=256)
     image = models.ImageField('Изображение', upload_to=user_directory_path, blank=True)
 
     correct_answer = models.CharField('Правильный ответ', max_length=128)
@@ -50,3 +52,13 @@ class Question(models.Model):
 
     def __str__(self):
         return f'{self.quiz} -> {self.title}'
+
+
+class Answer(models.Model):
+    """Сущность варианта ответа для викторины (для хранения ссылок на участников)"""
+    answer = models.CharField('Ответ на вопрос', max_length=128)
+    is_correct = models.BooleanField('Верный')
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='Вопрос викторины')
+    # users = models.ManyToManyField('EventUser', blank=True, verbose_name='Ответившие') # - тут должны быть ссылки на тех, кто выбрал этот вариант
