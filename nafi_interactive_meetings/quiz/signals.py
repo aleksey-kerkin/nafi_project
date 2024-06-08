@@ -14,6 +14,11 @@ def create_answers(sender, instance, **kwargs):
         question=instance
     )
 
-    # answer_dict = {}
-    # for i in range(1, 6):
-    #     answer_dict[f'wrong_answer_{i}'] = isinstance.__dict__.
+    for k, v in instance.__dict__:  # нужно протестить
+        if 'wrong_answer' in k:
+            Answer.objects.create(
+                answer=instance.v,
+                is_correct=False,
+                user=instance.user,
+                question=instance
+            )
