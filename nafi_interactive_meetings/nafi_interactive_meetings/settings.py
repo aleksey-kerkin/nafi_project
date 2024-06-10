@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     # Auto-documentation / swagger
     "drf_spectacular",
     "drf_spectacular_sidecar",
+    # CORS
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "nafi_interactive_meetings.urls"
@@ -218,3 +221,7 @@ SPECTACULAR_SETTINGS = {
         "displayOperationId": True,
     },
 }
+
+# Разрешенные домены для CORS
+# CORS_ALLOWED_ORIGINS = ["https://example.com", "http://localhost:3000"]
+CORS_ALLOW_ALL_ORIGINS = True
