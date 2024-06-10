@@ -1,5 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    PermissionsMixin,
+    BaseUserManager,
+)
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -43,9 +47,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     lastname = models.CharField("Фамилия", blank=True, null=True, max_length=255)
     phone = PhoneNumberField("Номер телефона", blank=True)
     position = models.CharField("Должность", blank=True, null=True, max_length=127)
-    entity = models.CharField("Физ./Юр. лицо", choices=PERSONS, default=NATURAL, max_length=17)
-    organization = models.CharField("Организация", blank=True, null=True, max_length=255)
-    business_area = models.CharField("Сфера деятельности", default="Безработный", max_length=255)
+    entity = models.CharField(
+        "Физ./Юр. лицо", choices=PERSONS, default=NATURAL, max_length=17
+    )
+    organization = models.CharField(
+        "Организация", blank=True, null=True, max_length=255
+    )
+    business_area = models.CharField(
+        "Сфера деятельности", default="Безработный", max_length=255
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
