@@ -42,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     ]
 
     email = models.EmailField("Email адрес", max_length=255, unique=True)
-    name = models.CharField("Имя пользователя", max_length=255)
+    name = models.CharField("Имя", max_length=255)
     middlename = models.CharField("Отчество", blank=True, null=True, max_length=255)
     lastname = models.CharField("Фамилия", blank=True, null=True, max_length=255)
     phone = PhoneNumberField("Номер телефона", blank=True)
