@@ -62,3 +62,10 @@ class Answer(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='Вопрос викторины')
     # users = models.ManyToManyField('EventUser', blank=True, verbose_name='Ответившие') # - тут должны быть ссылки на тех, кто выбрал этот вариант
+
+    class Meta:
+        verbose_name = 'Вариант ответа'
+        verbose_name_plural = 'Варианты ответа'
+
+    def __str__(self):
+        return f'{self.question} -> {self.answer}'

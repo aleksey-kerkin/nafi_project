@@ -6,7 +6,6 @@ from .models import Question, Answer
 
 @receiver(post_save, sender=Question)
 def create_answers(sender, instance, **kwargs):
-    # доделать, когда доделаю модели
     Answer.objects.create(
         answer=instance.correct_answer,
         is_correct=True,
@@ -14,10 +13,10 @@ def create_answers(sender, instance, **kwargs):
         question=instance
     )
 
-    for k, v in instance.__dict__:  # нужно протестить
-        if 'wrong_answer' in k:
+    for k, v in instance.__dict__.items():
+        if 'wrong_answer' in k and v:
             Answer.objects.create(
-                answer=instance.v,
+                answer=v,
                 is_correct=False,
                 user=instance.user,
                 question=instance
