@@ -11,6 +11,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -58,6 +59,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -81,6 +83,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -174,6 +177,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -221,6 +225,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -235,6 +240,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -283,6 +289,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -1030,14 +1037,9 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
-        user:
-          type: integer
-          title: Владелец
       required:
       - id
-      - pdf
       - title
-      - user
     PasswordResetConfirm:
       type: object
       properties:
@@ -1075,9 +1077,6 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
-        user:
-          type: integer
-          title: Владелец
     PatchedUser:
       type: object
       properties:
@@ -1251,9 +1250,6 @@ components:
           minimum: -9223372036854775808
           format: int64
           title: Время на блок, сек
-        user:
-          type: integer
-          title: Владелец
         event:
           type: integer
           title: Мероприятие
@@ -1263,7 +1259,6 @@ components:
       - jpeg
       - time
       - title
-      - user
     TokenBlacklist:
       type: object
       properties:
