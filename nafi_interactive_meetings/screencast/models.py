@@ -21,8 +21,9 @@ class Event(models.Model):
         'Презентация в PDF',
         upload_to=user_directory_path,
         validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
+        blank=True,
     )
-    current_slide = models.IntegerField(default=0)
+    current_slide = models.IntegerField(default=0)  # доработать
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
 
@@ -49,3 +50,11 @@ class Slide(models.Model):
 
     def __str__(self):
         return f'{self.event} -> {self.title}'
+
+
+# class Start:
+#     pass
+#
+#
+# class Break:
+#     pass

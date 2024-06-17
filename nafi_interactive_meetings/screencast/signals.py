@@ -11,15 +11,16 @@ from .models import Event, Slide
 @receiver(post_save, sender=Event)
 def create_slides(sender, instance, **kwargs):
     # https://pypi.org/project/pdf2image/
-    path_2_file = str(settings.MEDIA_ROOT) + '/' + str(instance.pdf)
-    images = convert_from_path(path_2_file, 300)
-    for i, image in enumerate(images, 1):
-        file_name = f'user_{instance.user.pk}/{uuid1().hex}.jpg'
-        image.save(f'media/{file_name}')
-        Slide.objects.create(
-            title=i,
-            time=5,
-            jpeg=file_name,
-            user=instance.user,
-            event=instance
-        )
+    if instance.pdf:
+        path_2_file = str(settings.MEDIA_ROOT) + '/' + str(instance.pdf)
+        images = convert_from_path(path_2_file, 300)
+        for i, image in enumerate(images, 1):
+            file_name = f'user_{instance.user.pk}/{uuid1().hex}.jpg'
+            image.save(f'media/{file_name}')
+            Slide.objects.create(
+                title=i,
+                time=5,
+                jpeg=file_name,
+                user=instance.user,
+                event=instance
+            )
