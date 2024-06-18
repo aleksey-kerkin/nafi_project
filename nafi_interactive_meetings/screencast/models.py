@@ -23,7 +23,7 @@ class Event(models.Model):
         validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
         blank=True,
     )
-    current_slide = models.IntegerField(default=0)  # доработать
+    current_slide = models.IntegerField(default=1)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
 
@@ -38,8 +38,11 @@ class Event(models.Model):
 class Slide(models.Model):
     """Сущность слайда/блока/темы"""
     title = models.CharField('Название/номер слайда', max_length=128, blank=False)
-    jpeg = models.FileField('Слайд в JPEG', upload_to=user_directory_path)
-    time = models.IntegerField('Время на блок, сек')
+    jpeg = models.FileField('Слайд в JPEG', upload_to=user_directory_path, blank=True)
+    data = models.TextField('Информация', blank=True)
+    scheduled_time = models.TimeField('Запланированное время на блок', default='00:05:00', blank=True)
+    time_spent = models.TimeField('Потраченное время на блок', default='00:00:00', blank=True)
+    order = models.IntegerField(blank=False)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Мероприятие')
@@ -47,14 +50,15 @@ class Slide(models.Model):
     class Meta:
         verbose_name = 'Слайд'
         verbose_name_plural = 'Слайды'
+        constraints = [
+            models.UniqueConstraint(fields=['event', 'order'], name='unique_order_per_event')
+        ]
 
     def __str__(self):
         return f'{self.event} -> {self.title}'
 
-
-# class Start:
-#     pass
-#
-#
-# class Break:
-#     pass
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            max_order = Slide.objects.filter(event=self.event).aggregate(models.Max('order'))['order__max']
+            self.order = max_order + 1 if max_order is not None else 1
+        super().save(*args, **kwargs)

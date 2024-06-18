@@ -19,8 +19,10 @@ def create_slides(sender, instance, **kwargs):
             image.save(f'media/{file_name}')
             Slide.objects.create(
                 title=i,
-                time=5,
                 jpeg=file_name,
+                scheduled_time='00:05:00',
+                time_spent='00:05:00',
+                order=i,
                 user=instance.user,
                 event=instance
             )
