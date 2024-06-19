@@ -41,4 +41,4 @@ class SlideListByEvent(generics.ListAPIView):
             return Slide.objects.filter(event=event_id)
         else:
             event_id = self.kwargs["event"]
-            return Slide.objects.filter(user=user, event=event_id)
+            return Slide.objects.filter(user=user, event=event_id).order_by('order')

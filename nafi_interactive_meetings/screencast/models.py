@@ -5,7 +5,6 @@ from django.core.validators import FileExtensionValidator
 from uuid import uuid1
 
 
-# Create your models here.
 def user_directory_path(instance, filename):
     extension = filename.split('.')[-1]
     name = uuid1().hex
@@ -51,7 +50,7 @@ class Slide(models.Model):
     class Meta:
         verbose_name = 'Слайд'
         verbose_name_plural = 'Слайды'
-        ordering = ('order',)
+        # ordering = ('order',)
 
     def __str__(self):
         return f'{self.event} -> {self.title}'
