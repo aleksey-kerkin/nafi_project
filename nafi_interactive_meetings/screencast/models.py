@@ -23,6 +23,7 @@ class Event(models.Model):
         validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
         blank=True,
     )
+    pdf_uploaded = models.BooleanField(default=False)
     current_slide = models.IntegerField(default=1)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
@@ -42,7 +43,7 @@ class Slide(models.Model):
     data = models.TextField('Информация', blank=True)
     scheduled_time = models.TimeField('Запланированное время на блок', default='00:05:00', blank=True)
     time_spent = models.TimeField('Потраченное время на блок', default='00:00:00', blank=True)
-    order = models.IntegerField(blank=False)
+    order = models.PositiveIntegerField(blank=False)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     event = models.ForeignKey(Event, blank=False, on_delete=models.CASCADE, verbose_name='Мероприятие')
@@ -50,15 +51,14 @@ class Slide(models.Model):
     class Meta:
         verbose_name = 'Слайд'
         verbose_name_plural = 'Слайды'
-        constraints = [
-            models.UniqueConstraint(fields=['event', 'order'], name='unique_order_per_event')
-        ]
+        ordering = ('order',)
 
     def __str__(self):
         return f'{self.event} -> {self.title}'
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            max_order = Slide.objects.filter(event=self.event).aggregate(models.Max('order'))['order__max']
-            self.order = max_order + 1 if max_order is not None else 1
+        if self.order:
+            if Slide.objects.filter(event=self.event, order=self.order).exists():
+                Slide.objects.filter(event=self.event, order__gte=self.order).exclude(pk=self.pk).update(
+                    order=models.F('order') + 1)
         super().save(*args, **kwargs)

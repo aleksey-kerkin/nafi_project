@@ -11,7 +11,7 @@ from .models import Event, Slide
 @receiver(post_save, sender=Event)
 def create_slides(sender, instance, **kwargs):
     # https://pypi.org/project/pdf2image/
-    if instance.pdf:
+    if instance.pdf and not instance.pdf_uploaded:
         path_2_file = str(settings.MEDIA_ROOT) + '/' + str(instance.pdf)
         images = convert_from_path(path_2_file, 300)
         for i, image in enumerate(images, 1):
@@ -26,3 +26,5 @@ def create_slides(sender, instance, **kwargs):
                 user=instance.user,
                 event=instance
             )
+        instance.pdf_uploaded = True
+        instance.save()
