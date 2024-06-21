@@ -139,9 +139,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.BasicAuthentication",  # Подключен auth по login/password
-        "rest_framework.authentication.SessionAuthentication",  # Подключен auth по сессии
-        # "rest_framework_simplejwt.authentication.JWTAuthentication",  # Подключение auth по JWT
+        # "rest_framework.authentication.BasicAuthentication",  # Подключен auth по login/password
+        # "rest_framework.authentication.SessionAuthentication",  # Подключен auth по сессии
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # Подключение auth по JWT
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",  # Для работы swagger
 }
