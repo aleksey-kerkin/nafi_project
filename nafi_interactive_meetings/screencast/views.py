@@ -13,6 +13,8 @@ class EventViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.id is None:
             return None
+        elif user.is_staff or user.is_superuser:
+            return Event.objects.all()
         else:
             return Event.objects.filter(user=user)
 
@@ -38,7 +40,10 @@ class SlideListByEvent(generics.ListAPIView):
         user = self.request.user
         if user.id is None:
             event_id = self.kwargs["event"]
-            return Slide.objects.filter(event=event_id)
+            return Slide.objects.filter(event=event_id).order_by("order")
+        elif user.is_staff or user.is_superuser:
+            event_id = self.kwargs["event"]
+            return Slide.objects.filter(event=event_id).order_by("order")
         else:
             event_id = self.kwargs["event"]
-            return Slide.objects.filter(user=user, event=event_id).order_by('order')
+            return Slide.objects.filter(user=user, event=event_id).order_by("order")
