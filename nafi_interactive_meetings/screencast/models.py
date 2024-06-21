@@ -55,12 +55,12 @@ class Slide(models.Model):
     def __str__(self):
         return f'{self.event} -> {self.title}'
 
-    # def save(self, *args, **kwargs):
-    #     if self.order:
-    #         if Slide.objects.filter(event=self.event, order=self.order).exists():
-    #             Slide.objects.filter(event=self.event, order__gte=self.order).exclude(pk=self.pk).update(
-    #                 order=models.F('order') + 1)
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if self.order:
+            if Slide.objects.filter(event=self.event, order=self.order).exists():
+                Slide.objects.filter(event=self.event, order__gte=self.order).exclude(pk=self.pk).update(
+                    order=models.F('order') + 1)
+        super().save(*args, **kwargs)
 
     # def save(self, *args, **kwargs):
     #     if Slide.objects.filter(event=self.event, order=self.order).exists():

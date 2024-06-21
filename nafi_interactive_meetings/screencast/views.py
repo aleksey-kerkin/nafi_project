@@ -4,9 +4,7 @@ from .serializers import EventSerializer, SlideSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = (
-        Event.objects.all()
-    )  # почему-то ругается без него, хотя по инструкции должно без него работать
+    queryset = Event.objects.all()  # почему-то ругается без него, хотя по инструкции должно без него работать
     serializer_class = EventSerializer
 
     def get_queryset(self):
@@ -20,9 +18,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 
 class SlideViewSet(viewsets.ModelViewSet):
-    queryset = (
-        Slide.objects.all()
-    )  # почему-то ругается без него, хотя по инструкции должно без него работать
+    queryset = Slide.objects.all()  # почему-то ругается без него, хотя по инструкции должно без него работать
     serializer_class = SlideSerializer
 
     def get_queryset(self):
