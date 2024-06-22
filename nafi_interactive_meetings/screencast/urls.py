@@ -1,14 +1,14 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import SlideListByEvent, EventViewSet
+from .views import SlideListByEvent, EventViewSet, SlideViewSet
 
-event_router = routers.SimpleRouter()
-event_router.register(r'events', EventViewSet)
-slide_router = routers.SimpleRouter()
-slide_router.register(r'slides', EventViewSet)
+router = routers.SimpleRouter()
+router.register(r'events', EventViewSet)
+router.register(r'slides', SlideViewSet)
 
 urlpatterns = [
-    path('', include(event_router.urls)),
-    path('', include(slide_router.urls)),
+    path('', include(router.urls)),
+    path('', include(router.urls)),
     path('events/<int:event>/slides/', SlideListByEvent.as_view()),
+
 ]

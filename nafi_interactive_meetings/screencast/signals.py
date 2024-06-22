@@ -28,3 +28,11 @@ def create_slides(sender, instance, **kwargs):
             )
         instance.pdf_uploaded = True
         instance.save()
+
+
+@receiver(post_save, sender=Slide)
+def set_order(sender, instance, **kwargs):
+    event_id = instance.event
+    all_slides = Slide.objects.filter(event=event_id).order_by('order')
+    for n, v in enumerate(all_slides, 1):
+        Slide.objects.filter(pk=v.id).update(order=n)

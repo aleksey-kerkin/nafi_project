@@ -61,36 +61,3 @@ class Slide(models.Model):
                 Slide.objects.filter(event=self.event, order__gte=self.order).exclude(pk=self.pk).update(
                     order=models.F('order') + 1)
         super().save(*args, **kwargs)
-
-    # def save(self, *args, **kwargs):
-    #     if Slide.objects.filter(event=self.event, order=self.order).exists():
-    #         conflict_obj = Slide.objects.filter(event=self.event, order=self.order)
-    #         Slide.objects.filter(event=self.event, order__gte=self.order).exclude(pk=self.pk).update(
-    #             order=models.F('order') + 1)
-    #     super().save(*args, **kwargs)
-
-    # def save(self, *args, **kwargs):
-    #     if self.pk is None:  # Check if object is being created for the first time
-    #         max_order_number = Act.objects.filter(event=self.event).aggregate(models.Max('order_number'))[
-    #                                'order_number__max'] or 0
-    #         self.order_number = max_order_number + 1
-    #     super(Act, self).save(*args, **kwargs)
-    #
-    #     # update order numbers of other acts in the same event
-    #     for act in Act.objects.filter(event=self.event).exclude(pk=self.pk):
-    #         if act.order_number >= self.order_number:
-    #             act.order_number += 1
-    #             act.save()
-
-    # def save(self, *args, **kwargs):
-    #     all_current_slides = Slide.objects.filter(event=self.event)
-    #     count = all_current_slides.count()
-    #     if self.pk is None:
-    #         if self.order > count + 1:
-    #             raise ValueError(f'Wrong slide sequence number. The number of slides is {count + 1}')
-    #     else:
-    #         if self.order > count:
-    #             raise ValueError(f'Wrong slide sequence number. The number of slides is {count}')
-    #
-    #     if Slide.objects.filter(event=self.event, order=self.order).exists():
-    #         if self.order > self.changed_data.order:
