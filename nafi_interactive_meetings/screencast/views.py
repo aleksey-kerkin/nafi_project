@@ -26,5 +26,5 @@ class SlideListByEvent(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        event_id = self.kwargs["event"]
-        return Slide.objects.filter(user=user, event=event_id).order_by("order")
+        event = self.kwargs["event"]
+        return Slide.objects.filter(user=user, event=event).order_by("order")
