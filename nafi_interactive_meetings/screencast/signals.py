@@ -10,6 +10,7 @@ from .models import Event, Slide
 
 @receiver(post_save, sender=Event)
 def create_slides(sender, instance, **kwargs):
+    """Функция разбивает презентацию пользователя на отдельные объекты слайдов."""
     # https://pypi.org/project/pdf2image/
     if instance.pdf and not instance.pdf_uploaded:
         path_2_file = str(settings.MEDIA_ROOT) + '/' + str(instance.pdf)
@@ -32,6 +33,7 @@ def create_slides(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Slide)
 def set_order(sender, instance, **kwargs):
+    """Функция переписывает порядковые номера слайдов по количеству слайдов."""
     event_id = instance.event
     all_slides = Slide.objects.filter(event=event_id).order_by('order')
     for n, v in enumerate(all_slides, 1):
