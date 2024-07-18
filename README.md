@@ -1,3 +1,2 @@
-# НАФИ Илиметр api
-### [Документация доступна по ссылке](http://95.163.230.46/api/schema/swagger-ui/)
-
+# НАФИ Илиметр API
+### [Дизайн/визуал](https://www.behance.net/gallery/203559397/ilimetr-proekt-dlja-analiticheskogo-centra-nafi)
